@@ -68,7 +68,7 @@ namespace WindowsFormsApp1
                 progressBar1.Maximum = 100;
                 if (ExcelOp.ReadExcelCellString(i, 1) != "")
                 {
-                    for (int j = 23; j < 54; j++)
+                    for (int j = 24; j < 55; j++)
                     {
                         newRow = tblDatas.NewRow();
                         newRow["姓名"] = ExcelOp.ReadExcelCellString(i, 1);
@@ -185,20 +185,26 @@ namespace WindowsFormsApp1
             ExcelOpreate ExcelOp = new ExcelOpreate("E:\\TEST\\2.xlsx");
             int count = 0;
             progressBar2.Maximum = 50;
-            for (int i = 7; i < 45; i++)
+            for (int i = 7; i < 50; i++)
             {
-                ExcelOp.WriteExcelCell(i, 2, GetTB.Rows[count]["姓名"].ToString());
-                for (int j = 0; j < 31; j++)
+                if (count < GetTB.Rows.Count)
                 {
-                    ExcelOp.WriteExcelCell(i, j + 3, GetTB.Rows[count]["考勤代码"].ToString());
-                    count++;
+                    ExcelOp.WriteExcelCell(i, 2, GetTB.Rows[count]["姓名"].ToString());
+                    for (int j = 0; j < 31; j++)
+                    {
+                        ExcelOp.WriteExcelCell(i, j + 3, GetTB.Rows[count]["考勤代码"].ToString());
+                        count++;
+                    }
+                    progressBar2.Value = i + 1;
                 }
-                progressBar2.Value = i + 1;
+                else
+                {
+                    break;
+                }
             }
             progressBar2.Value = 50;
             ExcelOp.Save();
             ExcelOp.KillExcel();
-
         }
     }
 }
